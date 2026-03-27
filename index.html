@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My_Travel_planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>My Travel Planner</h2>
+
+    <input type="text" id="placeInput" placeholder="Enter a place">
+    <button onclick="addPlace()">Add Place</button>
+
+    <br>
+    <p id="progress"></p>
+    <ul id="timeInfo"></ul>
+    <br>
+
+    <ul id="placeList"></ul>
+
+<br>
+
+<button onclick="startJourney()">Start Journey</button>
+<button onclick="nextPlace()">Next Place</button>
+
+<h3>Journey History</h3>
+<ul id="historyList"></ul>
+
+<script src="script.js"></script>
+
+</body>
+</html>
