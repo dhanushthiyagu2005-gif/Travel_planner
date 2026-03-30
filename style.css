@@ -1,20 +1,144 @@
+/* 🌍 Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
+/* 📱 Mobile-first body */
 body {
-  font-family: Arial;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #333;
+  padding: 15px;
+}
+
+/* 🧭 Title */
+h2 {
   text-align: center;
+  color: white;
+  margin-bottom: 15px;
 }
 
-#map {
-  height: 500px;
-  width: 100%;
-  margin-top: 20px;
-}
-
+/* 📦 Input + button container */
 input {
-  padding: 10px;
-  width: 200px;
+  width: 70%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
 }
 
 button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #333;
+  font-weight: bold;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #f0f0f0;
+}
+
+/* 📍 Place list */
+#placeList {
+  margin-top: 15px;
+}
+
+#placeList li {
+  list-style: none;
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#placeList li:hover {
+  transform: scale(1.02);
+}
+
+/* 📊 Info text */
+#progress, #timeInfo {
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+}
+
+/* 🧭 Buttons section */
+button[onclick="startJourney()"],
+button[onclick="nextPlace()"] {
+  width: 48%;
+  margin-top: 10px;
+}
+
+/* 📜 History */
+h3 {
+  margin-top: 20px;
+  color: white;
+}
+
+#historyList li {
+  list-style: none;
+  background: rgba(255,255,255,0.9);
   padding: 10px;
+  margin-top: 8px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* 🔥 Popup (Modern Modal) */
+#popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+
+/* Popup text */
+#popup p {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Popup buttons */
+#popup button {
+  width: 100%;
+  margin: 6px 0;
+  background: #4facfe;
+  color: white;
+}
+
+#popup button:nth-child(3) {
+  background: #ff4d4d; /* Delete */
+}
+
+#popup button:nth-child(4) {
+  background: #ccc; /* Cancel */
+  color: black;
+}
+
+/* 🎬 Animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

@@ -1,21 +1,21 @@
 let places = JSON.parse(localStorage.getItem("places")) || [];
 let currentIndex = Number(localStorage.getItem("currentIndex")) || 0;
 
-function addPlace() {
+async function addPlace() {
   const input = document.getElementById("placeInput");
   const place = input.value;
 
   if (place === "") return;
 
-  places.push(place);
+  const suggestions = getSmartPlaces(place);
 
-  const li = document.createElement("li");
-  li.textContent = place;
-  document.getElementById("placeList").appendChild(li);
+  alert("Suggestions:\n" + suggestions.join("\n"));
+
+  places.push(place);
+  localStorage.setItem("places", JSON.stringify(places));
 
   input.value = "";
-  localStorage.setItem("places", JSON.stringify(places));
-  updateTime();
+  loadplaces();
 }
 
 function openMap(place) {
@@ -69,28 +69,51 @@ console.log(currentIndex);
 }
 }
 
+let selectIndex = i;
+
 function loadplaces() {
     const list = document.getElementById("placeList");
     list.innerHTML = "";
 
-    for(let i = 0; i < places.length; i++) {
+    places.forEach((place, i) => {
         const li = document.createElement("li");
-        li.textContent = places[i];
-        li.onclick = function() {
-            const confirmDelete = confirm("Do you want to delete this place?");
-            if(confirmDelete) {
-                removePlace(i);
-            }
+        li.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${place}`;
+
+        li.ondblclick = function () {
+            selectedIndex = i;
+            document.getElementById("popupText").textContent = place;
+            document.getElementById("popup").style.display = "block";
         };
+
         list.appendChild(li);
-    }
+    });
 }
 
-function removePlace(index) {
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
 
+function editPlace() {
+    const newPlace = prompt("Edit place:", places[selectIndex]);
+    if (newPlace) {
+        places[selectIndex] = newPlace;
+        localStorage.setItem("places", JSON.stringify(places));
+        loadplaces();
+    }
+    closePopup();
+}
+
+function deletePlace() {
+    const confirmDelete = confirm("Delete this place?" + places[selectIndex]);
+    if (confirmDelete) {
+        removePlace(selectIndex);
+    }
+    closePopup();
+}
+function removePlace(index) {
     places.splice(index, 1);
     localStorage.setItem("places", JSON.stringify(places));
-    loadplaces();
+    loadplaces(); 
 }
 
 function saveHistory() {
@@ -128,8 +151,9 @@ function loadHistory() {
         const li = document.createElement("li");
         li.textContent = `${item.date} - Visited: ${(item.places || []).join(", ")}`;
 
+        console.log(places);
         li.onclick = function() {
-            loadJourneyFromHistory(item);
+            alert("History Clicked");
         }
         list.appendChild(li);   
     });
@@ -138,4 +162,57 @@ window.onload = function(){
     loadplaces();
     loadHistory();
     updateTime();
+}
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker Registered"));
+}
+
+async function getAIPlaces(place) {
+  try {
+    const res = await fetch("http://localhost:5000/ai-places", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ place })
+    });
+
+    const data = await res.json();
+
+    console.log("AI RESPONSE:", data); 
+
+    return data.result;
+
+  } catch (error) {
+    console.error("AI Error:", error);
+    return "Failed to get AI suggestions";
+  }
+}
+
+function getSmartPlaces(place) {
+  const data = {
+    bangalore: [
+      "Lalbagh Botanical Garden",
+      "Cubbon Park",
+      "Bangalore Palace",
+      "ISKCON Temple",
+      "Nandi Hills"
+    ],
+    chennai: [
+      "Marina Beach",
+      "Kapaleeshwarar Temple",
+      "Mahabalipuram",
+      "Fort St. George",
+      "Elliot’s Beach"
+    ],
+    ambur: [
+      "Ambur Star Biryani",
+      "Yelagiri Hills",
+      "Jalakandeswarar Temple",
+      "Vellore Fort"
+    ]
+  };
+
+  return data[place.toLowerCase()] || ["No suggestions found"];
 }
