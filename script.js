@@ -1,9 +1,32 @@
 let places = JSON.parse(localStorage.getItem("places")) || [];
 let currentIndex = Number(localStorage.getItem("currentIndex")) || 0;
 
+function showSuggestions() {
+  const input = document.getElementById("placeInput").value.trim();
+  const list = document.getElementById("suggestionList");
+
+  list.innerHTML = "";
+
+  if (input === "") return;
+
+  const suggestions = getSmartPlaces(input);
+
+  suggestions.forEach(place => {
+    const li = document.createElement("li");
+    li.textContent = place;
+
+    li.onclick = function () {
+      document.getElementById("placeInput").value = place;
+      list.innerHTML = "";
+    };
+
+    list.appendChild(li);
+  });
+}
+
 async function addPlace() {
   const input = document.getElementById("placeInput");
-  const place = input.value;
+  const place = input.value.trim();
 
   if (place === "") return;
 
@@ -47,7 +70,7 @@ function nextPlace() {
 
   if (currentIndex < places.length - 1) {
 
-    const goNext = confirm("You reached this place 🎉\nGo to next place?");
+    const goNext = confirm("You reached this place 🎉\n Go to next place?");
 
     if(goNext) {
         currentIndex++;
@@ -69,7 +92,7 @@ console.log(currentIndex);
 }
 }
 
-let selectIndex = i;
+let selectIndex = null;
 
 function loadplaces() {
     const list = document.getElementById("placeList");
@@ -80,7 +103,7 @@ function loadplaces() {
         li.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${place}`;
 
         li.ondblclick = function () {
-            selectedIndex = i;
+            selectIndex = i;
             document.getElementById("popupText").textContent = place;
             document.getElementById("popup").style.display = "block";
         };
@@ -144,7 +167,7 @@ function loadHistory() {
     const history = JSON.parse(localStorage.getItem("history")) || [];
 
     const list = document.getElementById("historyList");
-    list.innerHTML += "";
+    list.innerHTML = "";
 
     history.forEach((item,index) => {
 
@@ -158,7 +181,12 @@ function loadHistory() {
         list.appendChild(li);   
     });
 }
+
 window.onload = function(){
+    document
+    .getElementById("placeInput")
+    .addEventListener("input", showSuggestions);
+
     loadplaces();
     loadHistory();
     updateTime();
@@ -192,14 +220,9 @@ async function getAIPlaces(place) {
 
 function getSmartPlaces(place) {
   const data = {
-    bangalore: [
-      "Lalbagh Botanical Garden",
-      "Cubbon Park",
-      "Bangalore Palace",
-      "ISKCON Temple",
-      "Nandi Hills"
-    ],
+    bangalore: ["Nandi Hills"],
     chennai: [
+      "chennai",
       "Marina Beach",
       "Kapaleeshwarar Temple",
       "Mahabalipuram",
@@ -211,8 +234,28 @@ function getSmartPlaces(place) {
       "Yelagiri Hills",
       "Jalakandeswarar Temple",
       "Vellore Fort"
+    ],
+    vaniyambadi: [
+        "Vainu Bappu Observatory",
+        "Ambur Star Biryani"
     ]
   };
 
-  return data[place.toLowerCase()] || ["No suggestions found"];
+  const input = place.trim().toLowerCase();
+
+  console.log("INPUT:", input);
+
+
+  if (data[input]) {
+    return data[input];
+  }
+
+
+  for (let key in data) {
+    if (key.includes(input)) {
+      return data[key];
+    }
+  }
+
+  return [];
 }
