@@ -3,42 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My_Travel_planner</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4facfe">
-<link rel="icon" href="icon-192.png">
+    <title>Travel-planner</title>
 </head>
+
 <body>
-    <h2>My Travel Planner</h2>
 
-    <input type="text" id="placeInput" placeholder="Enter a place">
-   <ul id="suggestionList"></ul>
-    <button onclick="addPlace()"> <i class="fa-solid fa-plus"></i> Add Place</button>
-    <br>
-    <p id="progress"></p>
-    <ul id="timeInfo"></ul>
-    <br>
+<div class="app">
 
-    <ul id="placeList"></ul>
-<br>
-<br>
-<div id="popup" style="display:none; position:fixed; top:40%; left:50%; transform:translate(-50%, -50%); background:white; padding:20px; border:1px solid black;">
-  <p id="popupText"></p>
-  <button onclick="editPlace()"> <i class="fa-solid fa-pen"></i> Edit</button>
-  <button onclick="deletePlace()"> <i class="fa-solid fa-trash"></i> Delete</button>
-  <button onclick="closePopup()"> <i class="fa-solid fa-times"></i> Cancel</button>
+  
+  <div class="header">
+    <h1>✈️ Travel Planner</h1>
+    <p>Plan your journey smartly</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="placeInput" placeholder="Search places..." oninput="showSuggestions()">
+    <button onclick="addPlace()">
+      <i class="fa-solid fa-plus">ADD</i>
+    </button>
+  </div>
+
+  <ul id="suggestionList" class="suggestions"></ul>
+
+
+  <p id="progress" class="progress"></p>
+
+  <ul id="timeInfo" class="time-info"></ul>
+
+  <div id="placeList" class="cards"></div>
+
+  <div class="actions">
+    <button onclick="startJourney()">
+      <i class="fa-solid fa-play"></i> Start
+    </button>
+    <button onclick="nextPlace()">
+      <i class="fa-solid fa-forward"></i> Next
+    </button>
+  </div>
+
+  
+  <h3 class="history-title">Journey History</h3>
+  <div id="historyList" class="history-cards"></div>
+
 </div>
-<br>
 
-<button onclick="startJourney()"> <i class="fa-solid fa-play"></i> Start Journey</button>
-<button onclick="nextPlace()"> <i class="fa-solid fa-forward"></i> Next Place</button>
-
-<h3>Journey History</h3>
-<ul id="historyList"></ul>
+<div id="popup" class="popup">
+  <p id="popupText"></p>
+  <button onclick="editPlace()"><i class="fa-solid fa-pen"></i></button>
+  <button onclick="deletePlace()"><i class="fa-solid fa-trash"></i></button>
+  <button onclick="closePopup()"><i class="fa-solid fa-times"></i></button>
+</div>
 
 <script src="script.js"></script>
 
 </body>
 </html>
+

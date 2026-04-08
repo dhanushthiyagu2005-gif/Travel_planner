@@ -3,7 +3,6 @@ const filesToCache = [
   "index.html",
   "style.css",
   "script.js",
-  "server.js",
   "icon-192.png",
   "icon-512.png"
 ];

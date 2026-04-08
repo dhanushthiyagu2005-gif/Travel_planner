@@ -11,10 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ VERY IMPORTANT (SERVE FRONTEND FILES)
+
 app.use(express.static(path.resolve()));
 
-// 🔥 API
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });

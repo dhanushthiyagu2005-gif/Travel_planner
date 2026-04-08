@@ -159,28 +159,29 @@ function saveHistory() {
     updateTime();
 
     document.getElementById("progress").textContent = "";
+    updateHistoryUI();
     alert("Journey history saved!");
 }
 
-function loadHistory() {
+// function loadHistory() {
 
-    const history = JSON.parse(localStorage.getItem("history")) || [];
+//     const history = JSON.parse(localStorage.getItem("history")) || [];
 
-    const list = document.getElementById("historyList");
-    list.innerHTML = "";
+//     const list = document.getElementById("historyList");
+//     list.innerHTML = "";
 
-    history.forEach((item,index) => {
+//     history.forEach((item,index) => {
 
-        const li = document.createElement("li");
-        li.textContent = `${item.date} - Visited: ${(item.places || []).join(", ")}`;
+//         const li = document.createElement("li");
+//         li.textContent = `${item.date} - Visited: ${(item.places || []).join(", ")}`;
 
-        console.log(places);
-        li.onclick = function() {
-            alert("History Clicked");
-        }
-        list.appendChild(li);   
-    });
-}
+//         console.log(places);
+//         li.onclick = function() {
+//             alert("History Clicked");
+//         }
+//         list.appendChild(li);   
+//     });
+// }
 
 window.onload = function(){
     document
@@ -188,8 +189,9 @@ window.onload = function(){
     .addEventListener("input", showSuggestions);
 
     loadplaces();
-    loadHistory();
+    // loadHistory();
     updateTime();
+    updateHistoryUI();
 }
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
@@ -220,27 +222,139 @@ async function getAIPlaces(place) {
 
 function getSmartPlaces(place) {
   const data = {
-    bangalore: ["Nandi Hills"],
-    chennai: [
-      "chennai",
-      "Marina Beach",
-      "Kapaleeshwarar Temple",
-      "Mahabalipuram",
-      "Fort St. George",
-      "Elliot’s Beach"
-    ],
-    ambur: [
-      "Ambur Star Biryani",
-      "Yelagiri Hills",
-      "Jalakandeswarar Temple",
-      "Vellore Fort"
-    ],
-    vaniyambadi: [
-        "Vainu Bappu Observatory",
-        "Ambur Star Biryani"
-    ]
-  };
+  bangalore: [
+    "Lalbagh Botanical Garden",
+    "Cubbon Park",
+    "Bangalore Palace",
+    "ISKCON Temple",
+    "Nandi Hills",
+    "Wonderla Amusement Park",
+    "UB City Mall"
+  ],
 
+  chennai: [
+    "Marina Beach",
+    "Kapaleeshwarar Temple",
+    "Mahabalipuram",
+    "Fort St. George",
+    "Elliot’s Beach",
+    "VGP Marine Kingdom",
+    "Phoenix Marketcity"
+  ],
+
+  ambur: [
+    "Ambur Star Biryani",
+    "Yelagiri Hills",
+    "Jalakandeswarar Temple",
+    "Vellore Fort",
+    "Government Museum Vellore"
+  ],
+
+  vaniyambadi: [
+    "Yelagiri Hills",
+    "Javadi Hills",
+    "Vaniyambadi Masjid",
+    "Local Leather Market"
+  ],
+
+  vellore: [
+    "Vellore Fort",
+    "Jalakandeswarar Temple",
+    "Golden Temple Sripuram",
+    "Yelagiri Hills",
+    "Vellore Institute of Technology"
+  ],
+
+  hyderabad: [
+    "Charminar",
+    "Golconda Fort",
+    "Ramoji Film City",
+    "Hussain Sagar Lake",
+    "Birla Mandir"
+  ],
+
+  mumbai: [
+    "Gateway of India",
+    "Marine Drive",
+    "Elephanta Caves",
+    "Juhu Beach",
+    "Bandra-Worli Sea Link"
+  ],
+
+  delhi: [
+    "Red Fort",
+    "India Gate",
+    "Qutub Minar",
+    "Lotus Temple",
+    "Akshardham Temple"
+  ],
+
+  mysore: [
+    "Mysore Palace",
+    "Chamundi Hills",
+    "Brindavan Gardens",
+    "Mysore Zoo"
+  ],
+
+  goa: [
+    "Baga Beach",
+    "Calangute Beach",
+    "Fort Aguada",
+    "Dudhsagar Waterfalls",
+    "Anjuna Beach"
+  ],
+
+  pondicherry: [
+    "Rock Beach",
+    "Paradise Beach",
+    "Auroville",
+    "Sri Aurobindo Ashram",
+    "Promenade Beach",
+    "French Colony Streets"
+  ],
+
+  munnar: [
+    "Tea Gardens",
+    "Eravikulam National Park",
+    "Mattupetty Dam",
+    "Top Station",
+    "Attukal Waterfalls",
+    "Echo Point"
+  ],
+
+  kerala: [
+    "Alleppey Backwaters",
+    "Munnar Hills",
+    "Wayanad",
+    "Kochi Fort",
+    "Varkala Beach",
+    "Thekkady Wildlife Sanctuary"
+  ],
+
+  coimbatore: [
+    "Marudamalai Temple",
+    "coimbatore Isha Yoga Center",
+    "Siruvani Waterfalls",
+    "VOC Park",
+    "Black Thunder Theme Park"
+  ],
+
+  madurai: [
+    "Meenakshi Amman Temple",
+    "Thirumalai Nayakkar Palace",
+    "Gandhi Museum",
+    "Alagar Kovil",
+    "Vaigai Dam"
+  ],
+
+  tirunelveli: [
+    "Nellaiappar Temple",
+    "Papanasam Falls",
+    "Manimuthar Dam",
+    "Agasthiyar Falls",
+    "Courtallam Waterfalls"
+  ]
+};
   const input = place.trim().toLowerCase();
 
   console.log("INPUT:", input);
@@ -259,3 +373,48 @@ function getSmartPlaces(place) {
 
   return [];
 }
+
+function updateUI() {
+  const list = document.getElementById("placeList");
+  list.innerHTML = "";
+
+  places.forEach((place, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.textContent = place;
+
+    div.onclick = () => showPopup(index);
+
+    list.appendChild(div);
+  });
+}
+
+let journeyHistory = JSON.parse(localStorage.getItem("history")) || [];
+
+
+function updateHistoryUI() {
+  const historyContainer = document.getElementById("historyList");
+  historyContainer.innerHTML = "";
+
+  journeyHistory = JSON.parse(localStorage.getItem("history")) || [];
+
+  journeyHistory.forEach(item => {
+
+    const div = document.createElement("div");
+    div.className = "history-card";
+
+    
+    const place = item.places && item.places.length > 0 ? item.places[0] : "travel";
+
+    const imageUrl = `https://loremflickr.com/400/300/${encodeURIComponent(place)},landmark`;
+
+    div.style.backgroundImage = `url("${imageUrl}")`;
+
+    const text = document.createElement("span");
+    text.textContent = item.places.join(", ") + " • " + item.date;
+
+    div.appendChild(text);
+    historyContainer.appendChild(div);
+  });
+}
+
