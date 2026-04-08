@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Travel-planner</title>
+</head>
+
+<body>
+
+<div class="app">
+
+  
+  <div class="header">
+    <h1>✈️ Travel Planner</h1>
+    <p>Plan your journey smartly</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="placeInput" placeholder="Search places..." oninput="showSuggestions()">
+    <button onclick="addPlace()">
+      <i class="fa-solid fa-plus">ADD</i>
+    </button>
+  </div>
+
+  <ul id="suggestionList" class="suggestions"></ul>
+
+
+  <p id="progress" class="progress"></p>
+
+  <ul id="timeInfo" class="time-info"></ul>
+
+  <div id="placeList" class="cards"></div>
+
+  <div class="actions">
+    <button onclick="startJourney()">
+      <i class="fa-solid fa-play"></i> Start
+    </button>
+    <button onclick="nextPlace()">
+      <i class="fa-solid fa-forward"></i> Next
+    </button>
+  </div>
+
+  
+  <h3 class="history-title">Journey History</h3>
+  <div id="historyList" class="history-card"></div>
+
+</div>
+
+<div id="popup" class="popup">
+  <p id="popupText"></p>
+  <button onclick="editPlace()"><i class="fa-solid fa-pen"></i></button>
+  <button onclick="deletePlace()"><i class="fa-solid fa-trash"></i></button>
+  <button onclick="closePopup()"><i class="fa-solid fa-times"></i></button>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+

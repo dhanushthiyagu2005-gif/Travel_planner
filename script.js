@@ -34,11 +34,23 @@ async function addPlace() {
 
   alert("Suggestions:\n" + suggestions.join("\n"));
 
+ 
   places.push(place);
   localStorage.setItem("places", JSON.stringify(places));
 
+ 
+  journeyHistory.push({
+    name: place,
+    time: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("history", JSON.stringify(journeyHistory));
+
   input.value = "";
+
   loadplaces();
+updateUI();
+  updateHistoryUI();
 }
 
 function openMap(place) {
@@ -163,25 +175,7 @@ function saveHistory() {
     alert("Journey history saved!");
 }
 
-// function loadHistory() {
 
-//     const history = JSON.parse(localStorage.getItem("history")) || [];
-
-//     const list = document.getElementById("historyList");
-//     list.innerHTML = "";
-
-//     history.forEach((item,index) => {
-
-//         const li = document.createElement("li");
-//         li.textContent = `${item.date} - Visited: ${(item.places || []).join(", ")}`;
-
-//         console.log(places);
-//         li.onclick = function() {
-//             alert("History Clicked");
-//         }
-//         list.appendChild(li);   
-//     });
-// }
 
 window.onload = function(){
     document
@@ -189,7 +183,6 @@ window.onload = function(){
     .addEventListener("input", showSuggestions);
 
     loadplaces();
-    // loadHistory();
     updateTime();
     updateHistoryUI();
 }
@@ -389,32 +382,48 @@ function updateUI() {
   });
 }
 
+
 let journeyHistory = JSON.parse(localStorage.getItem("history")) || [];
-
-
 function updateHistoryUI() {
   const historyContainer = document.getElementById("historyList");
   historyContainer.innerHTML = "";
 
-  journeyHistory = JSON.parse(localStorage.getItem("history")) || [];
+  const gradients = ["gradient-1", "gradient-2", "gradient-3"];
 
-  journeyHistory.forEach(item => {
-
+  journeyHistory.forEach((item, index) => {
     const div = document.createElement("div");
-    div.className = "history-card";
+    div.className = `history-card ${gradients[index % gradients.length]}`;
 
-    
-    const place = item.places && item.places.length > 0 ? item.places[0] : "travel";
 
-    const imageUrl = `https://loremflickr.com/400/300/${encodeURIComponent(place)},landmark`;
+    const placeRow = document.createElement("div");
+    placeRow.className = "place-row";
 
-    div.style.backgroundImage = `url("${imageUrl}")`;
+    const placeIcon = document.createElement("span");
+    placeIcon.textContent = "╰┈➤";
 
-    const text = document.createElement("span");
-    text.textContent = item.places.join(", ") + " • " + item.date;
+    const placeName = document.createElement("span");
+    placeName.className = "place-name";
+    placeName.textContent = item.name;
 
-    div.appendChild(text);
+    placeRow.appendChild(placeIcon);
+    placeRow.appendChild(placeName);
+
+    const timeRow = document.createElement("div");
+    timeRow.className = "place-row";
+
+    const timeIcon = document.createElement("span");
+    timeIcon.textContent = "⏱️";
+
+    const timeText = document.createElement("span");
+    timeText.className = "place-time";
+    timeText.textContent = item.time;
+
+    timeRow.appendChild(timeIcon);
+    timeRow.appendChild(timeText);
+
+    div.appendChild(placeRow);
+    div.appendChild(timeRow);
+
     historyContainer.appendChild(div);
   });
 }
-
