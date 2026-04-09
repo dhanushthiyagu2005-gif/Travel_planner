@@ -9,7 +9,7 @@ body {
   color: white;
   border: none;
   border-radius: 5px;
-  left: 35%;
+  left: 25%;
   margin-top: -12.5px;
   position: absolute;
   width: 80px;
@@ -17,8 +17,6 @@ body {
   font-family: 'Segoe UI', sans-serif;
   
 }
-
-
 
 .app {
   max-width: 420px;
@@ -28,7 +26,6 @@ body {
   border-radius: 25px;
   overflow: hidden;
 }
-
 
 .header {
   background: linear-gradient(135deg, #4facfe, #6a5cff);
@@ -70,7 +67,6 @@ body {
   color: white;
   cursor: pointer;
 }
-
 
 .suggestions {
   list-style: none;
@@ -144,7 +140,6 @@ body {
   color: #444;
 }
 
-
 .popup {
   display: none;
   position: fixed;
@@ -195,20 +190,20 @@ body {
   background: #f5f7ff;
 }
 
-/* Left side */
+
 .card-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Right arrow */
+
 .card-arrow {
   font-size: 18px;
   color: #888;
 }
 
-/* HISTORY CARDS */
+
 #historyList {
   display: flex;
   flex-direction: column;
@@ -234,7 +229,6 @@ body {
   transform: translateY(-5px) scale(1.02);
 }
 
-/* Gradient styles */
 .gradient-1 {
   background: linear-gradient(135deg, #667eea, #764ba2);
 }
@@ -247,7 +241,6 @@ body {
   background: linear-gradient(135deg, #43cea2, #185a9d);
 }
 
-/* Icon + text layout */
 .place-row {
   display: flex;
   align-items: center;
