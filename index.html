@@ -6,51 +6,117 @@
   <title>Login</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+  body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.gif{
+  width: 30px;
+  height: 20px;
+}
 
-    .login-container {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 320px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+.login-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  padding: 20px 20px;
+  border-radius: 20px;
+  width: 50%;
+  max-width: 340px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.login-container :hover {
+  transform: scale(1.02);
+}
 
-    input {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
 
-    button {
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #667eea;
-      color: white;
-      font-size: 16px;
-    }
+.login-container h2 {
+  margin-bottom: 5px;
+  font-size: 24px;
+  padding: 12px;
+}
+
+.login-container p {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+
+input {
+  width: 80%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+
+input:focus :hover {
+  box-shadow: 0 0 0 2px #fff;
+}
+
+
+button {
+  width: 80%;
+  padding: 12px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  color: #667eea;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+button:hover {
+  background: #f1f1f1;
+  transform: scale(1.05);
+}
+
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.switch span {
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.gif {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
   </style>
 </head>
 
 <body>
 
+
 <div class="login-container">
   <h2>Login</h2>
 
   <form onsubmit="login(event)">
+
+<img src="solo-traveller.gif" class="gif">
+    <h2>Welcome Back!</h2>
+
     <input type="email" id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Password">
 
@@ -75,10 +141,12 @@ function login(e) {
     return;
   }
 
+  
   localStorage.setItem("loggedIn", "true");
 
   window.location.href = "home.html";
-  alert("Login successful!");
+
+
 }
 </script>
 

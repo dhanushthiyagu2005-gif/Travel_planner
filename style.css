@@ -4,7 +4,22 @@ body {
   background: #eef2f7;
 }
 
-/* APP CONTAINER */
+.logout {
+  background-color: #1f6aff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  left: 35%;
+  margin-top: -12.5px;
+  position: absolute;
+  width: 80px;
+  height: 35px;
+  font-family: 'Segoe UI', sans-serif;
+  
+}
+
+
+
 .app {
   max-width: 420px;
   margin: auto;
@@ -14,7 +29,7 @@ body {
   overflow: hidden;
 }
 
-/* HEADER */
+
 .header {
   background: linear-gradient(135deg, #4facfe, #6a5cff);
   color: white;
@@ -33,7 +48,6 @@ body {
   font-size: 14px;
 }
 
-/* SEARCH */
 .search-box {
   display: flex;
   gap: 10px;
@@ -57,7 +71,7 @@ body {
   cursor: pointer;
 }
 
-/* SUGGESTIONS */
+
 .suggestions {
   list-style: none;
   margin: 0 20px;
@@ -77,20 +91,17 @@ body {
   background: #f0f0f0;
 }
 
-/* PROGRESS */
 .progress {
   text-align: center;
   font-weight: bold;
   color: #555;
 }
 
-/* TIME INFO */
 .time-info {
   padding: 0 20px;
   color: #666;
 }
 
-/* CARDS */
 .cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -109,7 +120,6 @@ body {
   cursor: pointer;
 }
 
-/* ACTION BUTTONS */
 .actions {
   display: flex;
   justify-content: space-around;
@@ -125,7 +135,6 @@ body {
   cursor: pointer;
 }
 
-/* HISTORY */
 .history-title {
   padding-left: 20px;
 }
@@ -135,7 +144,7 @@ body {
   color: #444;
 }
 
-/* POPUP */
+
 .popup {
   display: none;
   position: fixed;
