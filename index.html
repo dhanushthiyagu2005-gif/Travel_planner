@@ -16,13 +16,12 @@
   height: 100vh;
 }
 
-
 .login-container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
   padding: 20px 20px;
   border-radius: 20px;
-  width: 50%;
+  width: 100%;
   max-width: 340px;
   text-align: center;
   color: white;
@@ -31,7 +30,6 @@
 .login-container:hover {
   transform: scale(1.02);
 }
-
 
 .login-container h2 {
   margin-bottom: 5px;
@@ -138,12 +136,9 @@ function login(e) {
     return;
   }
 
-  
   localStorage.setItem("loggedIn", "true");
 
   window.location.href = "home.html";
-
-
 }
 </script>
 
