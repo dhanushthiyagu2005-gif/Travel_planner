@@ -32,7 +32,7 @@ async function addPlace() {
 
   const suggestions = getSmartPlaces(place);
 
-  alert("Suggestions:\n" + suggestions.join("\n"));
+//   alert("Suggestions:\n" + suggestions.join("\n"));
 
  
   places.push(place);
