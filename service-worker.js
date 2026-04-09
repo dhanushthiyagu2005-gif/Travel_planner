@@ -1,28 +1,35 @@
-const cacheName = "travel-app-v1";
+const cacheName = "travel-app-v2";
+
 const filesToCache = [
   "index.html",
+  "home.html",
   "style.css",
-  "script.js",
-  "icon-192.png",
-  "icon-512.png"
+  "script.js"
 ];
+
+self.addEventListener("install", e => {
+  self.skipWaiting(); // 🔥 force update
+  e.waitUntil(
+    caches.open(cacheName).then(cache => cache.addAll(filesToCache))
+  );
+});
+
+self.addEventListener("activate", e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== cacheName) {
+            return caches.delete(key); // 🔥 delete old cache
+          }
+        })
+      )
+    )
+  );
+});
 
 self.addEventListener("fetch", e => {
   e.respondWith(
-    caches.match(e.request).then(response => {
-      if (response) return response;
-
-      return fetch(e.request).catch(err => {
-        console.log("Fetch failed:", err);
-
-        
-        if (e.request.destination === "image") {
-          return new Response(
-            "",
-            { status: 404 }
-          );
-        }
-      });
-    })
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
